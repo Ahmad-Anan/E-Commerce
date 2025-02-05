@@ -1,0 +1,38 @@
+@if(cartData)
+{
+    <section class="bg-main-light p-3 w-75 mx-auto rounded-2 shadow my-3">
+        <h1 class="fs-1 fw-bold">shop Cart :</h1>
+        <h3 class="fw-bold text-main">Total Cart Price : {{cartData.totalCartPrice | currency : 'GBP'}} </h3>  <!--  -->
+        <div class="container">
+            @for (item of cartData.products; track item.product._id) 
+            {
+                <div class="row border-bottom border-3">
+                    <div class="col-2 p-2">
+                        <div class="item-image">
+                            <img [src]="item.product.imageCover" class="w-100" [alt]="item.product.title">
+                        </div>
+                    </div>
+                    <div class="col-8 p-2">
+                        <div class="item-details">
+                            <h2 class="fs-3 fw-bold">{{item.product.title}}</h2>
+                            <p class="text-main fw-bold">{{item.price}} EGP</p>
+                            <span class="text-main  fw-bold"> <i (click)="removeItem(item.product._id)" class="fa-solid fa-trash me-3 cursor-pointer"></i> Remove</span>
+                        </div>
+                    </div>
+                    <div class="col-2 p-2">
+                        <div class="quantity text-main fs-2 d-flex justify-content-between align-items-center">
+                            <span (click)="updataeQuant(item.product._id, item.count + 1)"><i class="fa-solid fa-circle-plus cursor-pointer"></i></span>
+                            <span>{{item.count}}</span>
+                            @if(item.count > 1){<span (click)="updataeQuant(item.product._id,item.count - 1)"><i class="fa-solid fa-circle-minus cursor-pointer"></i></span>}
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        @if (cartData.products.length) {<button [routerLink]="['/checkout', cartData._id]" class="btn btn-main w-25 d-block mx-auto  mt-1">Check Out</button>}
+        
+    </section>
+    
+}
+
+

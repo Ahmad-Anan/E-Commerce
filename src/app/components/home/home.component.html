@@ -1,0 +1,87 @@
+<!-- Section Category owl carousel -->
+
+<!-- owl carousel (Static) -->
+<Section class="my-3">
+    <div class="container-fluid">
+        <div class="row g-0">
+            <div class="col-12 col-md-10">
+                <owl-carousel-o [options]="mainSlider">
+                    <ng-template carouselSlide>
+                        <img src="./assets/images/slider-image-1.jpeg" height="300px" alt="">
+                    </ng-template>  
+                    <ng-template carouselSlide>
+                        <img src="./assets/images/slider-image-2.jpeg" height="300px" alt="">
+                    </ng-template>  
+                    <ng-template carouselSlide>
+                        <img src="./assets/images/slider-image-3.jpeg" height="300px" alt="">
+                    </ng-template>  
+                    <ng-template carouselSlide>
+                        <img src="./assets/images/slider-2.jpeg" height="300px" alt="">
+                    </ng-template>  
+                    <ng-template carouselSlide>
+                        <img src="./assets/images/grocery-banner.png" height="300px" alt="">
+                    </ng-template>  
+                    <ng-template carouselSlide>
+                        <img src="./assets/images/banner-4.jpeg" height="300px" alt="">
+                    </ng-template>  
+                    </owl-carousel-o>
+            </div>
+            <div class="col-12 col-md-2">
+                <img src="./assets/images/grocery-banner.png" class="w-100" height="150px" alt="">
+                <img src="./assets/images/banner-4.jpeg" class="w-100" height="150px" alt="">
+            </div>
+        </div>
+    </div>
+</Section>
+
+
+<!-- owl carousel (Dynamic) -->
+<section class="my-3">
+    <owl-carousel-o [options]="categorySlider">
+        @for(category of categoriestsData ; track category._id)
+        {
+            <ng-template carouselSlide >
+                <img [src]="category.image" class="W-100" height="250px" [alt]="category.name" >
+                </ng-template>
+        }
+    </owl-carousel-o>
+</section>
+
+
+
+<!-- Section Home -->
+<section class="productsHome my-3">''
+    <div class="container">
+        <h1 class="w-50 mx-auto text-center border-top border-bottom border-success fw-bold p-2">Popular Product</h1>
+        <input [(ngModel)]="searchInputValue" type="text" placeholder="Search By Name ..." class=" input-product m-3 w-50 p-3 mx-auto ">
+        <div class="row">
+            @for (product of productsData | search : searchInputValue; track product._id)  
+            {
+            <div class="col-md-2 col-sm-6 p-2">
+                <div class="product p-2 cursor-pointer rounded-2" >
+                    <div [routerLink]="['/productDetails', product._id]">
+                        <div class="product-img">
+                            <img [src]="product.imageCover" [alt]="product.title" class="w-100">
+                        </div>
+                        <div class="product-caption">
+                            <h2 class="fs-6 text-main">{{product.category.name}}</h2>
+                            <h1 class="fs-6 fw-bold">{{product.title.split(' ').splice(0,2).join(' ')}}</h1>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span>{{product.price}} EGP</span>
+                                <div class="small">
+                                    @for ( star of [1,2,3,4,5].slice( 0,product.ratingsAverage);track $index ){<span><i class="fa-solid fa-star rating-color"></i></span>}
+                                    @if( product.ratingsAverage % 1 != 0) {<i class="fa-solid fa-star-half-stroke rating-color"></i>}
+                                    <span>{{product.ratingsAverage}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button (click)="addCartItem(product.id)" class="btn-main w-100">Add To Cart +</button>
+                    
+                </div>
+            </div> 
+            }
+        </div>
+    </div>
+    
+</section>

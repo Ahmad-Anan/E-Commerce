@@ -1,0 +1,104 @@
+<section class="bg-main-light p-2 rounded-2 w-75 mx-auto shadow my-3">
+    <h1 class="text-main ">Register Now :</h1>
+    @if(resText){<p class="alert alert-warning p-2 w-50 mx-auto text-center fs-6 fw-bold rounded-2">{{resText}}</p>}
+    <form [formGroup]="registerForm" (ngSubmit)="registerUser()">
+        <!-- formGroup ==> To Stop Refresh The Page   -->
+        <!-- ngSubmit ==> To Click Enter So Send The Data With Out Click Butten(Register) And linked It With Method  In The T.S -->
+        <!-- formControlName ==> To Get The Same Name In The T.S   -->
+
+    <!-- Name -->
+        <div class="my-2">
+        <label for="name" class="my-2" ><span class="text-danger">*</span> <span> Name :</span></label>
+        <input [ngClass]="{
+            'is-valid': !registerForm.get('name')?.errors && (registerForm.get('name')?.touched || registerForm.get('name')?.dirty),
+            'is-invalid': registerForm.get('name')?.errors && (registerForm.get('name')?.touched || registerForm.get('name')?.dirty),
+        }"
+            formControlName="name" type="name" class="form-control"  placeholder="Ex : Ahmed">
+            @if (registerForm.get('name')?.errors && registerForm.get('name')?.touched) 
+            {
+                <div class="alert alert-warning p-1 mt-1 fs-6 fw-bold rounded-2">
+                    @if (registerForm.get('name')?.getError('required')) {<p class="m-0 mt-1">Name Is Required</p>}
+                    @if (registerForm.get('name')?.getError('minlength')) {<p class="m-0 mt-1">Name Length Must Be 3 Char At least</p>}
+                    @else if (registerForm.get('name')?.getError('maxlength')) {<p class="m-0 mt-1">Name Length Must Be 10 Char At More</p>}
+                </div>
+            }
+        </div>
+
+    <!-- Email -->
+        <div class="my-2">
+            <label for="email" class="my-2" ><span class="text-danger">*</span> <span> Email :</span></label>
+            <input [ngClass]="{
+                'is-valid': !registerForm.get('email')?.errors && (registerForm.get('email')?.touched || registerForm.get('email')?.dirty),
+                'is-invalid': registerForm.get('email')?.errors && (registerForm.get('email')?.touched || registerForm.get('email')?.dirty),
+            }"
+            formControlName="email" type="email" class="form-control"placeholder="Ex : ahmed@gmail.com">
+            @if (registerForm.get('email')?.errors && registerForm.get('email')?.touched)
+            {
+                <div class="alert alert-warning p-1 mt-1 fs-6 fw-bold rounded-2">
+                    @if (registerForm.get('email')?.getError('required')) {<p class="m-0 mt-1"> Email Is Required </p>}
+                    @else if (registerForm.get('email')?.getError('email')) {<p class="m-0 mt-1"> Email Must Be Valid</p>}
+                </div>
+            }
+        </div>
+        
+
+    <!-- password -->
+        <div class="my-2"> 
+            <label for="password" class="my-2" ><span class="text-danger">*</span> <span> Password :</span></label>
+            <input [ngClass]="{
+                'is-valid': !registerForm.get('password')?.errors && (registerForm.get('password')?.touched || registerForm.get('password')?.dirty),
+                'is-invalid': registerForm.get('password')?.errors && (registerForm.get('password')?.touched || registerForm.get('password')?.dirty),
+            }"
+            formControlName="password" type="password" class="form-control" placeholder="Ex : Aa123@bcde">
+            @if (registerForm.get('password')?.errors &&  registerForm.get('password')?.touched)
+            {
+                <div class="alert alert-warning p-1 mt-1 fs-6 fw-bold rounded-2">
+                    @if (registerForm.get('password')?.getError('required') ) {<p class="m-0 mt-1"> password Is Required </p>}
+                    @else if (registerForm.get('password')?.getError('pattern')) {<p class="m-0 mt-1"> Password Must Be 6 Char At Least</p>}
+                </div>
+            }
+        </div>
+
+    <!-- rePassword -->
+        <div class="my-2">
+            <label for="rePassword" class="my-2" ><span class="text-danger">*</span> <span> Confairm Password :</span></label>
+            <input [ngClass]="{
+                'is-valid': registerForm.getError('missMatch') && (registerForm.get('rePassword')?.touched || registerForm.get('rePassword')?.dirty),
+                'is-invalid': registerForm.getError('missMatch') && (registerForm.get('rePassword')?.touched || registerForm.get('rePassword')?.dirty)
+            }"
+            formControlName="rePassword" type="password" id="rePassword" class="form-control" placeholder="Ex : Aa123@bcde">
+            @if (registerForm.getError('missMatch')  &&  registerForm.get('rePassword')?.touched)
+                {
+                    <div class="alert alert-warning p-1 mt-1 fs-6 fw-bold rounded-2">
+                        <p class="m-0 mt-1"> Confirm Password Is Not Correct </p>
+                    </div>
+                }
+        </div>
+
+    <!-- Phone -->
+        <div class="my-2">
+            <label for="phone" class="my-2" ><span class="text-danger">*</span> <span> Phone :</span></label>
+            <input [ngClass]="{
+                'is-valid': !registerForm.get('phone')?.errors && (registerForm.get('phone')?.touched || registerForm.get('phone')?.dirty),
+                'is-invalid': registerForm.get('phone')?.errors && (registerForm.get('phone')?.touched || registerForm.get('phone')?.dirty),
+            }"
+            formControlName="phone" type="tel" class="form-control"  placeholder="Ex : +201020304050">
+            @if (registerForm.get('phone')?.errors && registerForm.get('phone')?.touched) 
+            {
+                <div class="alert alert-warning p-1 mt-1 fs-6 fw-bold rounded-2">
+                    @if (registerForm.get('phone')?.getError('required')) {<p class="m-0 mt-1">Phone Is Required</p>}
+                    @else if (registerForm.get('phone')?.getError('pattern')) {<p class="m-0 mt-1">Enter Valid Number Phone</p> }
+                </div>
+            }
+        </div>
+
+    <!-- Button -->
+            <button type="submit" class="btn-main mt-3 d-block ms-auto" >
+                Register
+                @if(loading){<i class="fa-solid fa-circle-notch fa-spin"></i>}
+                
+            </button>
+
+    </form>
+</section>
+

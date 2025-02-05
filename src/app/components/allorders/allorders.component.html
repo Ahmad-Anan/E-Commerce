@@ -1,0 +1,33 @@
+<section class="allOrders my-3">
+    <div class="container">
+        <h1 class="w-50 mx-auto text-center border-top border-bottom border-success fw-bold p-2 text-main">All Orders</h1>
+        <h1 class="fw-bold p-2 text-main">Total Price : {{ orders.length > 0 ? orders[0].totalOrderPrice : 0 }} EGP</h1>
+        <div class="row">
+                @for (order of orders; track $index)
+                {
+                    <div class="col col-3 p-2" >
+                        <div class="product p-2 cursor-pointer rounded-2">
+                            <div>
+                                <div class="product-img">
+                                    <img [src]="order.cartItems[0].product.imageCover" [alt]="order.cartItems[0].product.title" class="w-100">
+                                </div>
+                                <div class="order-caption">
+                                    <h3>Order ID: {{ order._id }}</h3>
+                                    <p>Total Price: {{ order.totalOrderPrice }} EGP</p>
+                                    <p>Payment Method: {{ order.paymentMethodType }}</p>
+                                    <p>Paid: {{ order.isPaid ? 'Yes' : 'No' }}</p>
+                                    <p>Delivered: {{ order.isDelivered ? 'Yes' : 'No' }}</p>
+                                    <h2 class="fs-6 text-main">{{ order.cartItems[0].product.category.name }}</h2>
+                                    <h1 class="fs-6 fw-bold">{{ order.cartItems[0].product.title.split(' ').slice(0, 2).join(' ') }}</h1>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span>{{ order.cartItems[0].price }} EGP</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                }
+                
+        </div>
+    </div>
+</section>

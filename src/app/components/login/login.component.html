@@ -1,0 +1,47 @@
+<section class="bg-main-light p-2 rounded-2 w-75 mx-auto shadow my-3">
+    <h1 class="text-main ">Login Now :</h1>
+    @if(resText){<p class="alert alert-warning p-2 w-50 mx-auto text-center fs-6 fw-bold rounded-2">{{resText}}</p>}
+
+
+    <form [formGroup]="loginForm" (ngSubmit)="loginUser()">
+
+        <!-- Email -->
+        <div class="my-2">
+            <label for="email" class="my-2" ><span class="text-danger">*</span> <span> Email :</span></label>
+            <input [ngClass]="{
+                'is-valid': !loginForm.get('email')?.errors && (loginForm.get('email')?.touched || loginForm.get('email')?.dirty),
+                'is-invalid': loginForm.get('email')?.errors && (loginForm.get('email')?.touched || loginForm.get('email')?.dirty),
+            }"
+            formControlName="email" type="email" class="form-control"placeholder="Ex : ahmed@gmail.com">
+            @if (loginForm.get('email')?.errors && loginForm.get('email')?.touched)
+            {
+                <div class="alert alert-warning p-2 fs-6 fw-bold rounded-2">
+                    @if (loginForm.get('email')?.getError('required')) {<p class="m-0 mt-1"> Email Is Required </p>}
+                    @else if (loginForm.get('email')?.getError('email')) {<p class="m-0 mt-1"> Email Must Be Valid</p>}
+                </div>
+            }
+        </div>
+        
+    <!-- password -->
+        <div class="my-2"> 
+            <label for="password" class="my-2" ><span class="text-danger">*</span> <span> Password :</span></label>
+            <input [ngClass]="{
+                'is-valid': !loginForm.get('password')?.errors && (loginForm.get('password')?.touched || loginForm.get('password')?.dirty),
+                'is-invalid': loginForm.get('password')?.errors && (loginForm.get('password')?.touched || loginForm.get('password')?.dirty),
+            }"
+            formControlName="password" type="password" class="form-control" placeholder="Ex : Aa123@bcde">
+            @if (loginForm.get('password')?.errors &&  loginForm.get('password')?.touched)
+            {
+                <div class="alert alert-warning p-2 fs-6 fw-bold rounded-2">
+                    @if (loginForm.get('password')?.getError('required') ) {<p class="m-0 mt-1"> password Is Required </p>}
+                    @else if (loginForm.get('password')?.getError('pattern')) {<p class="m-0 mt-1"> Password Must Be 6 Char At Least</p>}
+                </div>
+            }
+        </div>
+        <button type="submit" class="btn-main mt-3 d-block mx-auto">
+            Login
+            @if(loading){<i class="fa-solid fa-circle-notch fa-spin"></i>}
+        </button>
+    </form>
+    <div class="text-center my-3 py-1"><a routerLink="/ResetPassword">هل نسيت كلمة السر؟</a></div>
+</section>
